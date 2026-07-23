@@ -86,6 +86,44 @@ body {
   font-size: 15px;
 }
 
+.skin-selector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.skin-selector-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--label);
+  transition: color 0.25s;
+}
+
+#skin-select {
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border);
+  border-radius: 6px;
+  color: var(--toggle-text);
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+#skin-select:hover {
+  border-color: #7aa2f7;
+  color: #7aa2f7;
+}
+
+body.skin-neon {
+  --canvas-bg: #050505;
+}
+
 .game-title {
   font-family: 'Courier New', Courier, monospace;
   font-size: 36px;
@@ -235,37 +273,73 @@ kbd {
   background: #9bbdff;
 }
 
-/* ---- Start screen / Leaderboard ---- */
-#play-btn,
-#reset-records-btn,
-.leaderboard-panel,
-#save-score-row {
+/* ---- Overlay box visibility (start / gameover / paused) ---- */
+#start-box {
   display: none;
 }
 
-.overlay.start #restart-btn {
+#overlay.start #start-box {
+  display: flex;
+}
+
+#overlay.start #gameover-box,
+#overlay.start .pause-box {
   display: none;
 }
 
-.overlay.start #play-btn {
-  display: inline-block;
+#overlay.gameover #start-box {
+  display: none;
 }
 
-.overlay.start .leaderboard-panel,
-.overlay.gameover .leaderboard-panel {
-  display: flex;
+/* ---- Start screen ---- */
+.start-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 8px;
+  color: #7aa2f7;
+  text-shadow: 0 0 20px rgba(122, 162, 247, 0.5);
 }
 
-.overlay.start #reset-records-btn,
-.overlay.gameover #reset-records-btn {
-  display: inline-block;
+#play-btn {
+  margin-top: 4px;
+  background: #7aa2f7;
+  color: #0f0f17;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
 }
 
-.overlay.gameover #save-score-row {
-  display: flex;
+#play-btn:hover {
+  background: #9bbdff;
 }
 
+.reset-records-btn {
+  margin-top: 4px;
+  background: transparent;
+  color: var(--controls-text);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.reset-records-btn:hover {
+  color: #e57373;
+  border-color: #e57373;
+}
+
+/* ---- Leaderboard ---- */
 .leaderboard-panel {
+  display: flex;
   flex-direction: column;
   gap: 10px;
   width: 260px;
@@ -353,6 +427,7 @@ kbd {
 }
 
 #save-score-row {
+  display: flex;
   gap: 8px;
   width: 100%;
 }
@@ -401,8 +476,47 @@ kbd {
   cursor: default;
 }
 
-#play-btn {
-  margin-top: 4px;
+/* ---- Pause menu ---- */
+.pause-box {
+  display: none;
+  min-width: 220px;
+}
+
+#overlay.paused #gameover-box,
+#overlay.paused #start-box {
+  display: none;
+}
+
+#overlay.paused .pause-box {
+  display: flex;
+}
+
+#overlay.gameover .pause-box {
+  display: none;
+}
+
+.pause-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #7aa2f7;
+}
+
+.pause-main,
+.pause-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.pause-box .hidden {
+  display: none;
+}
+
+.pause-main button,
+.pause-controls button {
   background: #7aa2f7;
   color: #0f0f17;
   border: none;
@@ -415,24 +529,44 @@ kbd {
   transition: background 0.15s;
 }
 
-#play-btn:hover {
+.pause-main button:hover,
+.pause-controls button:hover {
   background: #9bbdff;
 }
 
-.reset-records-btn {
+.level-select-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin-top: 4px;
-  background: transparent;
+  font-size: 12px;
   color: var(--controls-text);
-  border: 1px solid var(--kbd-border);
-  border-radius: 6px;
-  padding: 6px 14px;
-  font-size: 11px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: color 0.15s, border-color 0.15s;
 }
 
-.reset-records-btn:hover {
-  color: #e57373;
-  border-color: #e57373;
+.level-select-row select {
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  color: var(--kbd-text);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.pause-controls ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.pause-controls li {
+  font-size: 12px;
+  color: var(--controls-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }

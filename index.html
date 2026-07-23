@@ -12,6 +12,15 @@
       <span class="toggle-icon">&#9790;</span>
       <span class="toggle-label">LIGHT</span>
     </button>
+    <div id="skin-selector" class="skin-selector">
+      <label for="skin-select" class="skin-selector-label">SKIN</label>
+      <select id="skin-select">
+        <option value="retro">Retro</option>
+        <option value="neon">Neon</option>
+        <option value="pastel">Pastel</option>
+        <option value="pixel">Pixel</option>
+      </select>
+    </div>
     <h1 class="game-title">TETRIS</h1>
     <div class="game-container">
       <canvas id="board" width="300" height="600"></canvas>
@@ -49,8 +58,29 @@
     </div>
 
     <div id="overlay" class="overlay start">
-      <div class="overlay-box">
-        <p id="overlay-title">TETRIS</p>
+      <div class="overlay-box" id="start-box">
+        <p class="start-title">TETRIS</p>
+
+        <div class="leaderboard-panel">
+          <div class="leaderboard-stats">
+            <span class="stat">
+              <span class="stat-label">Mejor combo</span>
+              <span class="stat-value" id="best-combo-value-start">0</span>
+            </span>
+            <span class="stat">
+              <span class="stat-label">Máx. líneas</span>
+              <span class="stat-value" id="max-lines-value-start">0</span>
+            </span>
+          </div>
+          <ol id="leaderboard-list-start" class="leaderboard-list"></ol>
+        </div>
+
+        <button id="play-btn">JUGAR</button>
+        <button id="reset-records-btn" class="reset-records-btn">Reset records</button>
+      </div>
+
+      <div class="overlay-box" id="gameover-box">
+        <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
 
         <div class="leaderboard-panel">
@@ -73,8 +103,43 @@
         </div>
 
         <button id="restart-btn">Reiniciar</button>
-        <button id="play-btn">JUGAR</button>
-        <button id="reset-records-btn" class="reset-records-btn">Reset records</button>
+      </div>
+
+      <div class="overlay-box pause-box" id="pause-box">
+        <p class="pause-title">PAUSA</p>
+
+        <div class="pause-main" id="pause-main">
+          <button id="resume-btn">Reanudar</button>
+          <button id="pause-restart-btn">Reiniciar</button>
+          <button id="controls-btn">Ver controles</button>
+
+          <div class="level-select-row">
+            <label for="start-level">Nivel inicial</label>
+            <select id="start-level">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pause-controls hidden" id="pause-controls">
+          <ul>
+            <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> mover</li>
+            <li><kbd>&uarr;</kbd> rotar</li>
+            <li><kbd>&darr;</kbd> bajar</li>
+            <li><kbd>Space</kbd> caída</li>
+            <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+          </ul>
+          <button id="back-btn">Volver</button>
+        </div>
       </div>
     </div>
   </div>
